@@ -55,9 +55,7 @@ class ABFile():
   def readat(self,bytes,offset):
     # Read from the A file using the sandbox's readat...
     length = len(self.Afile.readat(None,0))
-    if offset < 0 or length < 0:
-      raise error
-    else:
+    if offset >= 0 or length >= 0:
       return self.Afile.readat(bytes,offset)
 
   def close(self):
