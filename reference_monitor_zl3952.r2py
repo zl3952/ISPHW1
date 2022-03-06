@@ -28,15 +28,15 @@ class ABFile():
 
     # make the files and add 'SE' to the readat file...
     if create:
+      #make sure AB files are properly created
+      self.Afile = openfile(self.Afn,create)
+      self.Bfile = openfile(self.Bfn,create)
+      self.Afile.writeat('SE', 0)
+    else:
       if self.Afn in listfiles():
-        #Backup File Present, open A/B File -> Original A File, Empty B File
-        self.Afile = openfile(self.Afn,create)
-        self.Bfile = openfile(self.Bfn,create)
+        self.Afile = openfile(self.Afn,True)
+        self.Bfile = openfile(self.Bfn,True)
         self.Bfile.writeat(self.Afile.readat(None,0),0)
-      else:
-        self.Afile = openfile(self.Afn,create)
-        self.Bfile = openfile(self.Bfn,create)
-        self.Afile.writeat('SE', 0)
         
   def openfAB(self, flag):
     self.Afile = openfile(self.Afn,flag)
@@ -53,7 +53,7 @@ class ABFile():
   def readat(self,bytes,offset):
     # Read from the A file using the sandbox's readat...
     length = len(self.Afile.readat(None,0))
-    if offset >= 0 or length >= 0:
+    if offset >= 0 and length >= 0 and bytes <= length:
       return self.Afile.readat(bytes,offset)
 
   def close(self):
