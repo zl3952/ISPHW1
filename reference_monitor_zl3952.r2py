@@ -58,24 +58,24 @@ class ABFile():
     return self.Afile.readat(bytes,offset)
 
   def close(self):
-    #Data stored in variables for restoration of data
-    backup_data = self.Afile.readat(None,0)
+    #make buckup
+    backup = self.Afile.readat(None,0)
     data = self.Bfile.readat(None,0)
-    backupfile = self.Afn
-    #Check if the written file starts with "S" and ends with "E"
+    temp = self.Afn
+    #File validation
+    #if new file is valid, update old file
     if self.Bfile.readat(None,0).startswith("S") and self.Bfile.readat(None,0).endswith("E"):
-      #The Written File is Valid -> Discard Older Version
       self.Afile.close()
       self.Bfile.close()
       removefile(self.Afn)
-      openfile(backupfile,True).writeat(data,0)
+      openfile(temp,True).writeat(data,0)
       removefile(self.Bfn)
+    #if new file is invalid, keep og file
     else:
-      #The Written File is Invalid -> Discard Invalid File
       self.Afile.close()
       self.Bfile.close()
       removefile(self.Afn)
-      openfile(backupfile,True).writeat(backup_data,0)
+      openfile(temp,True).writeat(backup,0)
       removefile(self.Bfn)
 
 
