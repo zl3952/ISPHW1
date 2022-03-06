@@ -28,6 +28,9 @@ class ABFile():
 
     # make the files and add 'SE' to the readat file...
     if create:
+      openAB()
+      self.Afile.writeat('SE',0)
+"""
       if self.Afn in listfiles():
       #make sure AB files are properly created
         openAB()
@@ -42,10 +45,11 @@ class ABFile():
         self.Bfile.writeat(self.Afile.readat(None,0),0)
       else:
         raise error
+"""
 
   def openAB():
-    self.Afile = openfile(self.Afn,True)
-    self.Bfile = openfile(self.Bfn,True)
+    self.Afile = openfile(self.Afn,create)
+    self.Bfile = openfile(self.Bfn,create)
 
   def writeat(self,data,offset):
     
