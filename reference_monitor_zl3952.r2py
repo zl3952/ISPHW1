@@ -55,32 +55,8 @@ class ABFile():
     self.Bfile.writeat(data,offset)
   
   def readat(self,bytes,offset):
-    #Creating the Lock
-    self.lock = createlock()
-    #Set the Lock to Blocking
-    self.lock.acquire(True)
-    #Offset and Length Validation for Read Call
-    length = len(self.Afile.readat(None,0))
-    if offset < 0 or length < 0:
-      raise RepyArgumentError
-      self.lock.release()
-    elif offset >= len(self.Afile.readat(None,0)):
-      raise SeekPastEndOfFileError
-      self.lock.release()
-    elif bytes > length and bytes != None:
-      raise SeekPastEndOfFileError
-      self.lock.release()
-    elif (len(self.Afile.readat(None,0)) < offset+length) and bytes != None:
-      raise RepyArgumentError
-      self.lock.release()
-    else:
-      #Try Reading the File else raise Exception
-      try:
-         read_data = self.Afile.readat(bytes,offset)
-         self.lock.release()
-         return read_data
-      except:
-         raise eror
+    # Read from the A file using the sandbox's readat...
+    return self.Afile.readat(bytes,offset)
 
   def close(self):
     #Data stored in variables for restoration of data
