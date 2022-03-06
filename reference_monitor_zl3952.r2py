@@ -57,7 +57,8 @@ class ABFile():
     length = len(self.Afile.readat(None,0))
     if offset < 0 or length < 0:
       raise error
-    return self.Afile.readat(bytes,offset)
+    else:
+      eturn self.Afile.readat(bytes,offset)
 
   def close(self):
     #make buckup
