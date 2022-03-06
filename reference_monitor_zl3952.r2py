@@ -33,7 +33,7 @@ class ABFile():
       self.Bfile = openfile(self.Bfn,create)
       self.Afile.writeat('SE', 0)
     else:
-    #if not, raise error flag
+    #if not, create the file
       if self.Afn in listfiles():
         self.Afile = openfile(self.Afn,True)
         self.Bfile = openfile(self.Bfn,True)
@@ -46,7 +46,12 @@ class ABFile():
   def writeat(self,data,offset):
     
     # Write the requested data to the B file using the sandbox's writeat call
-    self.Bfile.writeat(data,offset)
+    if offset < 0:
+        raise error
+    elif offset > len(self.Bfile.readat(None,0)):
+        raise error
+    else:
+      self.Bfile.writeat(data,offset)
   
   def readat(self,bytes,offset):
     # Read from the A file using the sandbox's readat...
