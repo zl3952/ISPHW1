@@ -38,8 +38,7 @@ class ABFile():
         self.Afile = openfile(self.Afn,True)
         self.Bfile = openfile(self.Bfn,True)
         self.Bfile.writeat(self.Afile.readat(None,0),0)
-      else:
-        raise error
+        
   def openfAB(self, flag):
     self.Afile = openfile(self.Afn,flag)
     self.Bfile = openfile(self.Bfn,flag)
