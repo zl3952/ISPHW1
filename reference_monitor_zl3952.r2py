@@ -66,17 +66,16 @@ class ABFile():
     if self.Bfile.readat(None,0).startswith("S") and self.Bfile.readat(None,0).endswith("E"):
       self.Afile.close()
       self.Bfile.close()
-      openfile(temp,True).writeat(data,0)
       removefile(self.Afn)
       removefile(self.Bfn)
+      openfile(temp,True).writeat(data,0)
     #if new file is invalid, keep og file
     else:
       self.Afile.close()
       self.Bfile.close()
-      openfile(temp,True).writeat(backup,0)
       removefile(self.Afn)
       removefile(self.Bfn)
-
+      openfile(temp,True).writeat(backup,0)
 
 def ABopenfile(filename, create):
   return ABFile(filename,create)
