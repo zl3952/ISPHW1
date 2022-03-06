@@ -28,12 +28,12 @@ class ABFile():
 
     # make the files and add 'SE' to the readat file...
     if create:
-    #make sure AB files are properly created
-      self.Afile = openfile(self.Afn,create)
-      self.Bfile = openfile(self.Bfn,create)
-      self.Afile.writeat('SE', 0)
+      if self.Afn in listfiles():
+      #make sure AB files are properly created
+        self.Afile = openfile(self.Afn,create)
+        self.Bfile = openfile(self.Bfn,create)
+        self.Afile.writeat('SE', 0)
     else:
-    #if not, create the file
       if self.Afn in listfiles():
         self.Afile = openfile(self.Afn,True)
         self.Bfile = openfile(self.Bfn,True)
@@ -72,7 +72,6 @@ class ABFile():
       removefile(self.Bfn)
     #if new file is invalid, keep og file
     else:
-      #The Written File is Invalid -> Discard Invalid File
       self.Afile.close()
       self.Bfile.close()
       removefile(self.Afn)
