@@ -39,14 +39,28 @@ class ABFile():
     self.Bfile.writeat(data,offset)
   
   def readat(self,bytes,offset):
-    # Read from the A file using the sandbox's readat...
+    self.lock = createlock()
+    self.lock.acquire(True)
     length = len(self.Afile.readat(None,0))
-    if length < 0:
-      raise error
+    if offset < 0 or length < 0:
+      raise RepyArgumentError
+      self.lock.release()
+    elif offset >= len(self.Afile.readat(None,0)):
+      raise SeekPastEndOfFileError
+      self.lock.release()
     elif bytes > length and bytes != None:
-      raise error
+      raise SeekPastEndOfFileError
+      self.lock.release()
+    elif (len(self.Afile.readat(None,0)) < offset+length) and bytes != None:
+      raise RepyArgumentError
+      self.lock.release()
     else:
-      return self.Afile.readat(bytes,offset)
+      try:
+         read_data = self.Afile.readat(bytes,offset)
+         self.lock.release()
+         return read_data
+      except:
+         raise RepyArgumentError
 
   def close(self):
     self.Afile.close()
