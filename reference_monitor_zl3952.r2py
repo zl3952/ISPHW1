@@ -52,6 +52,7 @@ class ABFile():
   
   def readat(self,bytes,offset):
     # Read from the A file using the sandbox's readat...
+    #verify offset and read length
     length = len(self.Afile.readat(None,0))
     if offset >= 0 and length >= 0:
       return self.Afile.readat(bytes,offset)
@@ -66,17 +67,17 @@ class ABFile():
     #File validation
     #if new file is valid, update old file
     if self.Bfile.readat(None,0).startswith("S") and self.Bfile.readat(None,0).endswith("E"):
-      self.Afile.close()
-      self.Bfile.close()
       removefile(self.Afn)
       removefile(self.Bfn)
+      self.Afile.close()
+      self.Bfile.close()
       openfile(temp,True).writeat(data,0)
     #if new file is invalid, keep og file
     else:
-      self.Afile.close()
-      self.Bfile.close()
       removefile(self.Afn)
       removefile(self.Bfn)
+      self.Afile.close()
+      self.Bfile.close()
       openfile(temp,True).writeat(backup,0)
 
 def ABopenfile(filename, create):
