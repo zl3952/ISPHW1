@@ -28,7 +28,6 @@ class ABFile():
 
     # make the files and add 'SE' to the readat file...
     if create:
-      if self.Afn in listfiles():
       #make sure AB files are properly created
         self.Afile = openfile(self.Afn,create)
         self.Bfile = openfile(self.Bfn,create)
