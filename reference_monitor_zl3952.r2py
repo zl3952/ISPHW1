@@ -49,9 +49,18 @@ class ABFile():
     self.Bfile = openfile(self.Bfn,flag)
 
   def writeat(self,data,offset):
-    
-    # Write the requested data to the B file using the sandbox's writeat call
-    self.Bfile.writeat(data,offset)
+    self.lock = createlock()
+    #Set the Lock to Blocking
+    self.lock.acquire(True)
+    if offset < 0:
+        raise RepyArgumentError
+        self.lock.release()
+    elif offset > len(self.Bfile.readat(None,0)):
+        raise SeekPastEndOfFileError
+        self.lock.release()
+    else:
+      self.Bfile.writeat(data,offset)
+      self.lock.release()
   
   def readat(self,bytes,offset):
     # Read from the A file using the sandbox's readat...
