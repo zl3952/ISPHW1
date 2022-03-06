@@ -45,12 +45,10 @@ class ABFile():
   def writeat(self,data,offset):
     
     # Write the requested data to the B file using the sandbox's writeat call
-    if offset < 0:
-        raise error
-    elif offset > len(self.Bfile.readat(None,0)):
-        raise error
-    else:
+    if offset >= 0 and offset > len(self.Bfile.readat(None,0))
       self.Bfile.writeat(data,offset)
+    else:
+      raise error
   
   def readat(self,bytes,offset):
     # Read from the A file using the sandbox's readat...
