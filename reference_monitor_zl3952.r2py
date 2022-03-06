@@ -29,19 +29,19 @@ class ABFile():
     # make the files and add 'SE' to the readat file...
     if create:
       if self.Afn in listfiles():
-        openfAB(create)
+        openfAB(self, create)
         self.Bfile.writeat(self.Afile.readat(None,0),0)
       else:
-        openfAB(create)
+        openfAB(self, create)
         self.Afile.writeat('SE', 0)
     else:
       if self.Afn in listfiles():
-        openfAB(True)
+        openfAB(self, True)
         self.Bfile.writeat(self.Afile.readat(None,0),0)
       else:
         raise error
 
-  def openfAB(flag):
+  def openfAB(self, flag):
     self.Afile = openfile(self.Afn,flag)
     self.Bfile = openfile(self.Bfn,flag)
 
