@@ -45,9 +45,8 @@ class ABFile():
       raise error
     elif bytes > length and bytes != None:
       raise error
-    elif (len(self.Afile.readat(None,0)) < offset+length) and bytes != None:
-      raise error
-    return self.Afile.readat(bytes,offset)
+    else:
+      return self.Afile.readat(bytes,offset)
 
   def close(self):
     self.Afile.close()
